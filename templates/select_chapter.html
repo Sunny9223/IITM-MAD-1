@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Select Chapter{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center">Select Chapter</h2>
+    
+    <div class="row mt-4">
+        {% for chapter in chapters %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{ chapter[1] }}</h5> <!-- Chapter Name -->
+                        <p class="card-text">{{ chapter[2] }}</p> <!-- Chapter Description -->
+                        <a href="/quiz/quiz/{{ chapter[0] }}" class="btn btn-primary">Select Chapter</a> <!-- Link to create quiz -->
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <a href="/admin-dashboard" class="btn btn-secondary mt-3">Back to Dashboard</a>
+</div>
+{% endblock %}

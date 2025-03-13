@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center">Edit User</h2>
+    <form method="POST" action="/admin/edit-user/{{ user[0] }}">
+        <div class="mb-3">
+            <label for="username" class="form-label">Username:</label>
+            <input type="text" class="form-control" id="username" name="username" value="{{ user[1] }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="full_name" class="form-label">Full Name:</label>
+            <input type="text" class="form-control" id="full_name" name="full_name" value="{{ user[2] }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="qualification" class="form-label">Qualification:</label>
+            <input type="text" class="form-control" id="qualification" name="qualification" value="{{ user[3] }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="role" class="form-label">Role:</label>
+            <select class="form-select" id="role" name="role" required>
+                <option value="admin" {% if user[4] == 'admin' %}selected{% endif %}>Admin</option>
+                <option value="user" {% if user[4] == 'user' %}selected{% endif %}>User</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <input type="checkbox" id="update_password" name="update_password" onclick="togglePasswordField()">
+            <label for="update_password" class="form-label">Want to update password?</label>
+        </div>
+        <div class="mb-3" id="password_field" style="display: none;">
+            <label for="password" class="form-label">New Password:</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Enter new password">
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+    <a href="/admin/manage-users" class="btn btn-secondary mt-3">Back to Manage Users</a>
+</div>
+
+<script>
+    function togglePasswordField() {
+        var checkbox = document.getElementById('update_password');
+        var passwordField = document.getElementById('password_field');
+        if (checkbox.checked) {
+            passwordField.style.display = 'block'; // Show password field
+        } else {
+            passwordField.style.display = 'none'; // Hide password field
+        }
+    }
+</script>
+{% endblock %}

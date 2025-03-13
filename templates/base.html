@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Student Portal{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
+    <!-- Add this in the <head> section of base.html -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        html, body {
+            height: 100%; /* Full height for the body */
+        }
+        body {
+            display: flex;
+            flex-direction: column; /* Stack children vertically */
+        }
+        .content {
+            flex: 1; /* Allow content to grow and fill space */
+        }
+    </style>
+
+</head>
+
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('admin_dashboard') }}">QuizMaster</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    {% if 'username' in session %}
+                        {% if session['role'] == 'admin' %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.path == url_for('admin_dashboard') %}active{% endif %}" href="{{ url_for('admin_dashboard') }}">Admin Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.path == '/admin/subject' %}active{% endif %}" href="/admin/subject">Subject</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.path == '/admin/chapter' %}active{% endif %}" href="/admin/chapter">Chapter</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.path == '/admin/quiz' %}active{% endif %}" href="/admin/quiz">Quiz</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.path == '/admin/question' %}active{% endif %}" href="/admin/question">Question</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.path == '/admin/manage-users' %}active{% endif %}" href="/admin/manage-users">Users</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.path == url_for('user_dashboard') %}active{% endif %}" href="{{ url_for('user_dashboard') }}">User Dashboard</a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                </ul>
+                <a href="/logout" class="btn btn-danger mx-2 my-2">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4 content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer class="bg-light text-center py-4 mt-5">
+        <p>&copy; 2025 QuizMaster. All rights reserved.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#subjectsTable').DataTable(); // Initialize DataTable
+        });
+    </script>
+</body>
+</html>

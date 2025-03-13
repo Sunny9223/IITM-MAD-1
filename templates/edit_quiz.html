@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Quiz{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center">Edit Quiz</h2>
+    <form method="POST" action="/admin/edit-quiz/{{ quiz[0] }}">
+        <div class="mb-3">
+            <label for="quiz_name" class="form-label">Quiz Name:</label>
+            <input type="text" class="form-control" id="quiz_name" name="quiz_name" value="{{ quiz[1] }}" required placeholder="Enter quiz name">
+        </div>
+        <div class="mb-3">
+            <label for="date_of_quiz" class="form-label">Date of Quiz:</label>
+            <input type="date" class="form-control" id="date_of_quiz" name="date_of_quiz" value="{{ quiz[3] }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="time_duration_hours" class="form-label">Time Duration:</label>
+            <div class="input-group">
+                <input type="number" class="form-control" id="time_duration_hours" name="time_duration_hours" value="{{ quiz[4] // 60 }}" min="0" required placeholder="Hours">
+                <span class="input-group-text">hours</span>
+                <input type="number" class="form-control" id="time_duration_minutes" name="time_duration_minutes" value="{{ quiz[4] % 60 }}" min="0" max="59" required placeholder="Minutes">
+                <span class="input-group-text">minutes</span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="remarks" class="form-label">Remarks:</label>
+            <input type="text" class="form-control" id="remarks" name="remarks" value="{{ quiz[5] }}" required placeholder="Enter remarks">
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+    <a href="/admin/quiz" class="btn btn-secondary mt-3">Back to quizzes</a>
+</div>
+{% endblock %}

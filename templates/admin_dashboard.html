@@ -1,0 +1,62 @@
+    {% extends "base.html" %}
+
+    {% block title %}Admin Dashboard{% endblock %}
+
+    {% block content %}
+    <div class="container">
+        <h2 class="text-center">Welcome Admin</h2>
+        <p class="text-center">With great power comes great responsibility.</p>
+        
+        <div class="row mt-4">
+            <div class="col-md-3">
+                <div class="card mb-4 h-100">
+                    <img src="/static/assets/bg.jpg" class="card-img-top" alt="Create Subject">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Create Subject</h5>
+                        <p class="card-text">Add new subjects for your quizzes.</p>
+                        <div class="mt-auto">
+                            <a href="/admin/subject" class="btn btn-primary">Go to Create Subject</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 h-100">
+                    <img src="/static/assets/bg.jpg" class="card-img-top" alt="Create Chapter">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Create Chapter</h5>
+                        <p class="card-text">Organize your subjects into chapters.</p>
+                        <div class="mt-auto">
+                            <a href="/admin/chapter" class="btn btn-primary">Go to Create Chapter</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 h-100">
+                    <img src="/static/assets/bg.jpg" class="card-img-top" alt="Create Quiz">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Create Quiz</h5>
+                        <p class="card-text">Design quizzes to test knowledge.</p>
+                        <div class="mt-auto">
+                            <a href="/admin/quiz" class="btn btn-primary">Go to Create Quiz</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 h-100">
+                    <img src="/static/assets/bg.jpg" class="card-img-top" alt="Add Question">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Add Question</h5>
+                        <p class="card-text">Add questions to your existing quizzes.</p>
+                        <div class="mt-auto">
+                            <a href="/admin/question" class="btn btn-primary">Go to Add Question</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}

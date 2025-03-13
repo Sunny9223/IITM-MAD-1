@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}User Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alert alert-dismissible fade show" role="alert">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+    {% endwith %}
+    <h2 class="text-center">User Dashboard</h2>
+    <h3 class="mt-4">Available Quizzes</h3>
+    <ul class="list-group">
+        {% for quiz in quizzes %}
+        <li class="list-group-item d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <strong>Quiz Name:</strong> {{ quiz[1] }} | <strong>Date:</strong> {{ quiz[3] }} | <strong>Duration:</strong> {{ quiz[4] }} minutes
+            </div>
+            <a href="{{ url_for('attempt_quiz', quiz_id=quiz[0]) }}" class="btn btn-primary btn-sm">Attempt Quiz</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h3 class="mt-5">Previous Attempts</h3>
+        <table id="attemptsTable" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Chapter</th>
+                    <th>Quiz Name</th>
+                    <th>Score</th>
+                    <th>Attempt Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- {{previous_attempts}} -->
+                {% for attempt in previous_attempts %}
+                    <tr>
+                        <td>{{ attempt[4] }}</td>
+                        <td>{{ attempt[3] }}</td>
+                        <td>{{ attempt[5] }}</td>
+                        <td>{{ attempt[1] }}/{{ attempt[6] }}</td>
+                        <td>{{ attempt[2] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+</div>
+
+
+<!-- Include jQuery from a CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Include DataTables JS -->
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<!-- Include Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#attemptsTable').DataTable(); // Initialize DataTable for previous attempts
+    });
+</script>
+{% endblock %}

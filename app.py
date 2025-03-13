@@ -104,11 +104,11 @@ def admin_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-@app.route('/admin-dashboard')
-def admin_dashboard():
-    if 'username' in session and session['role'] == 'admin':
-        return render_template('admin_dashboard.html', username=session['username'])
-    return redirect(url_for('home'))
+# @app.route('/admin-dashboard')
+# def admin_dashboard():
+#     if 'username' in session and session['role'] == 'admin':
+#         return render_template('admin_dashboard.html', username=session['username'])
+#     return redirect(url_for('home'))
 
 @app.route('/user-dashboard')
 @login_required

@@ -104,11 +104,11 @@ def admin_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-# @app.route('/admin-dashboard')
-# def admin_dashboard():
-#     if 'username' in session and session['role'] == 'admin':
-#         return render_template('admin_dashboard.html', username=session['username'])
-#     return redirect(url_for('home'))
+@app.route('/admin-dashboard')
+def admin_dashboard():
+    if 'username' in session and session['role'] == 'admin':
+        return render_template('admin_dashboard.html', username=session['username'])
+    return redirect(url_for('home'))
 
 @app.route('/user-dashboard')
 @login_required
@@ -773,5 +773,5 @@ def logout():
 if __name__ == '__main__':
     init_db()
     # insert_sample_data()
-    app.run(host='0.0.0.0', port=80, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
     # app.run(debug=True)

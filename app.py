@@ -85,14 +85,13 @@ def login():
         if user and bcrypt.checkpw(password.encode('utf-8'), user[2]):  # Compare hashed password
             user_obj = User(user[0], user[1], user[3])
             login_user(user_obj)  # Log the user in
+            session['role'] = user[3]  # Store the role in the session
+            session['username'] = user[1]  # Store the username in the session
             flash("Login successful! Welcome back.", "success")  # Success message
-            # Redirect based on user role
             if user[3] == 'admin':
                 return redirect(url_for('admin_dashboard'))
             else:
                 return redirect(url_for('user_dashboard'))
-        else:
-            flash("Invalid credentials. Please try again.", "danger")  # Error message
 
     return render_template('login.html')
 
@@ -686,6 +685,7 @@ def edit_user(user_id):
 @app.route('/admin/dashboard')
 @admin_required
 def admin_dashboard():
+    print("Session:", session, session['role'])
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
 

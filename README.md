@@ -14,11 +14,11 @@ This Flask application is designed to manage a quiz system where users can regis
 
 ## Installation
 1. **Clone the repository**:
-git clone github_repository
+git clone `https://github.com/Sunny9223/IITM-MAD-1`
 
 2. **Create a virtual environment**:
 Run the following command to create a virtual environment (you can name it `venv` or any name you prefer):
-python -m venv venv
+`python3 -m venv venv`
 Activate the virtual environment:
 * On Windows: `venv\Scripts\activate`
 * On macOS (used for developing project) and Linux: `source venv/bin/activate`

@@ -92,7 +92,8 @@ def login():
                 return redirect(url_for('admin_dashboard'))
             else:
                 return redirect(url_for('user_dashboard'))
-
+        else:
+            flash("Username already exists. Please choose a different one.", "danger")
     return render_template('login.html')
 
 def admin_required(f):
@@ -584,7 +585,7 @@ def delete_question(question_id):
     conn.commit()
     conn.close()
     
-    flash("Quiz deleted successfully!", "success")
+    flash("Question deleted successfully!", "success")
     return redirect(url_for('question'))
 
 @app.route('/admin/edit-question/<int:question_id>', methods=['GET', 'POST'])
@@ -737,6 +738,26 @@ def admin_dashboard():
 
 @app.route('/admin/dashboard/data', methods=['GET'])
 @admin_required
+# def dashboard_data():
+#     subject_id = request.args.get('subject_id')
+#     chapter_id = request.args.get('chapter_id')
+
+#     conn = sqlite3.connect('database.db')
+#     cursor = conn.cursor()
+
+#     # Example query to get filtered data based on subject and chapter
+#     if subject_id and chapter_id:
+#         cursor.execute("SELECT COUNT(*) FROM quizzes WHERE chapter_id = ?", (chapter_id,))
+#     elif subject_id:
+#         cursor.execute("SELECT COUNT(*) FROM quizzes WHERE chapter_id IN (SELECT id FROM chapters WHERE subject_id = ?)", (subject_id,))
+#     else:
+#         cursor.execute("SELECT COUNT(*) FROM quizzes")
+
+#     total_quizzes = cursor.fetchone()[0]
+
+#     # Return data as JSON
+#     return jsonify(total_quizzes=total_quizzes)
+
 def dashboard_data():
     subject_id = request.args.get('subject_id')
     chapter_id = request.args.get('chapter_id')
@@ -744,18 +765,31 @@ def dashboard_data():
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
 
-    # Example query to get filtered data based on subject and chapter
+    # Initialize counts
+    total_quizzes = 0
+    total_questions = 0
+
+    # Query to get total quizzes based on subject and chapter
     if subject_id and chapter_id:
         cursor.execute("SELECT COUNT(*) FROM quizzes WHERE chapter_id = ?", (chapter_id,))
+        total_quizzes = cursor.fetchone()[0]
+        cursor.execute("SELECT COUNT(*) FROM questions WHERE quiz_id IN (SELECT id FROM quizzes WHERE chapter_id = ?)", (chapter_id,))
+        total_questions = cursor.fetchone()[0]
     elif subject_id:
         cursor.execute("SELECT COUNT(*) FROM quizzes WHERE chapter_id IN (SELECT id FROM chapters WHERE subject_id = ?)", (subject_id,))
+        total_quizzes = cursor.fetchone()[0]
+        cursor.execute("SELECT COUNT(*) FROM questions WHERE quiz_id IN (SELECT id FROM quizzes WHERE chapter_id IN (SELECT id FROM chapters WHERE subject_id = ?))", (subject_id,))
+        total_questions = cursor.fetchone()[0]
     else:
         cursor.execute("SELECT COUNT(*) FROM quizzes")
+        total_quizzes = cursor.fetchone()[0]
+        cursor.execute("SELECT COUNT(*) FROM questions")
+        total_questions = cursor.fetchone()[0]
 
-    total_quizzes = cursor.fetchone()[0]
-
+    conn.close()
+    
     # Return data as JSON
-    return jsonify(total_quizzes=total_quizzes)
+    return jsonify(total_quizzes=total_quizzes, total_questions=total_questions)
 
 @app.route('/dashboard')
 def dashboard():

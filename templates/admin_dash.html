@@ -218,6 +218,8 @@
                 totalQuizzesChart.data.datasets[0].data[0] = data.total_quizzes;
                 totalQuizzesChart.update();
                 // You can update other charts similarly based on the fetched data
+                totalQuestionsChart.data.datasets[0].data[0] = data.total_questions; // Update total questions chart
+                totalQuestionsChart.update();
             });
     });
 </script>

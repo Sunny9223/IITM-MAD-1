@@ -20,7 +20,7 @@
         </div>
         <div class="mb-3">
             <label for="role" class="form-label">Role:</label>
-            <select class="form-select" id="role" name="role" required>
+            <select class="form-select" disabled id="role" name="role" required>
                 <option value="admin" {% if user[4] == 'admin' %}selected{% endif %}>Admin</option>
                 <option value="user" {% if user[4] == 'user' %}selected{% endif %}>User</option>
             </select>

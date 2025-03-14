@@ -2,3 +2,4 @@ flask
 flask_login
 bcrypt
 jsonify
+gunicorn
